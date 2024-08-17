@@ -4,7 +4,11 @@ import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
 import dotenv from "dotenv";
 import passport from "passport";
-import localStrategy from "passport-local"
+import localStrategy from "passport-local";
+import authRoutes from "./routes/auth";
+import listingsRoutes from "./routes/listing";
+import User from "./models/user";
+import bcrypt from "bcryptjs";
 
 //.env file config
 dotenv.config();
@@ -18,10 +22,7 @@ mongoose.connect(process.env.MONGO_URL).then(() =>{
 
 const store = MongoStore.create({
     mongoUrl: process.env.ATLASDB_URL,
-    crypto: {
-    secret: process.env.SECRET,
-    },
-    touchAfter: 24 * 3600,
+    collectionName: 'sessions',
   });
 
 //cookie settings
@@ -43,41 +44,43 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(session(sessionOptions));
 
-// //routes 
-// app.use("/", userRoutes);
-app.use("/auth", authRoutes);
 
-//passport auth middlewares
+// Passport Middleware
 app.use(passport.initialize());
-app.use(passport.session()); 
-passport.use(new localStrategy(
-    function(username, password, done) {
-      User.findOne({ username: username }, function(err, user) {
-        if (err) return done(err);
-        if (!user) return done(null, false, { message: 'Incorrect username.' });
-  
-        user.comparePassword(password).then(isMatch => {
-          if (isMatch) {
-            return done(null, user);
-          } else {
-            return done(null, false, { message: 'Incorrect password.' });
-          }
-        }).catch(err => done(err));
-      });
+app.use(passport.session());
+
+// Passport Local Strategy
+passport.use(
+  new localStrategy({ usernameField: 'email' }, async (email, password, done) => {
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        return done(null, false, { message: 'Incorrect email.' });
+      }
+      const isUser = await bcrypt.compare(password, user.password);
+      if (!isUser) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    } catch (err) {
+      return done(err);
     }
-  ));
-  
-  // Serialize and deserialize user
-  passport.serializeUser((user, done) => {
+  })
+);  
+// Serialize and Deserialize User
+passport.serializeUser((user, done) => {
     done(null, user.id);
   });
   
-  passport.deserializeUser((id, done) => {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await User.findById(id);
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
   });
-  
+
 //error handling middleware
 app.use((err, req, res, next)=>{
     const statusCode = err.statusCode || 500;
@@ -88,6 +91,10 @@ app.use((err, req, res, next)=>{
         statusCode,
     });
 });
+
+// //routes 
+app.use("/api/listings", listingsRoutes);
+app.use("/api/auth", authRoutes);
 
 
 //server start

@@ -1,11 +1,13 @@
 import express from "express";
-import { signup, signin , googleHandler,signout} from "../controllers/auth_controller.js";
+import { signup, signout} from "../controllers/auth_controller.js";
+import passport from "passport";
 
 const router = express.Router();
 
 router.post("/signup",signup);
-router.post("/signin",signin);
-router.post("/google",googleHandler);
+router.post('/signin', passport.authenticate('local'), (req, res) => {
+    res.json({ message: 'Logged in successfully' });
+  });   
 router.get('/signout',signout);
 
 export default router;
