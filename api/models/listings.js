@@ -1,4 +1,5 @@
-const mongoose =  require("mongoose");
+import mongoose from "mongoose";
+
 const schema = mongoose.Schema;
 
 const listingSchema = new schema ({
@@ -7,9 +8,9 @@ const listingSchema = new schema ({
         required: true, 
     },
     description : String,
-    image : {
-        type: String,
-    },
+    // image : {
+    //     type: String,
+    // },
     price : Number,
     sold:{
         type: Boolean,
