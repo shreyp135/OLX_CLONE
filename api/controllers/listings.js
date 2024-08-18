@@ -1,4 +1,4 @@
-import Listings from "../models/listings";
+import Listings from "../models/listings.js";
 
 
 export const newListing = async (req, res) => {

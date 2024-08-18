@@ -5,10 +5,11 @@ import MongoStore from "connect-mongo";
 import dotenv from "dotenv";
 import passport from "passport";
 import localStrategy from "passport-local";
-import authRoutes from "./routes/auth";
-import listingsRoutes from "./routes/listing";
-import User from "./models/user";
+import authRoutes from "./routes/auth.js";
+import listingsRoutes from "./routes/listings.js";
+import User from "./models/user.js";
 import bcrypt from "bcryptjs";
+import cors from "cors";
 
 //.env file config
 dotenv.config();
@@ -21,9 +22,13 @@ mongoose.connect(process.env.MONGO_URL).then(() =>{
 });
 
 const store = MongoStore.create({
-    mongoUrl: process.env.ATLASDB_URL,
-    collectionName: 'sessions',
+    mongoUrl: process.env.MONGO_URL,
+    crypto: {
+    secret: process.env.SECRET,
+    },
+    touchAfter: 24 * 3600,
   });
+
 
 //cookie settings
 const sessionOptions = {
@@ -40,6 +45,7 @@ const sessionOptions = {
 
 //express app 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(session(sessionOptions));
@@ -80,6 +86,10 @@ passport.serializeUser((user, done) => {
       done(err);
     }
   });
+  
+// //routes 
+app.use("/api/listings", listingsRoutes);
+app.use("/api/auth", authRoutes);
 
 //error handling middleware
 app.use((err, req, res, next)=>{
@@ -92,9 +102,6 @@ app.use((err, req, res, next)=>{
     });
 });
 
-// //routes 
-app.use("/api/listings", listingsRoutes);
-app.use("/api/auth", authRoutes);
 
 
 //server start

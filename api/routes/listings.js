@@ -1,10 +1,8 @@
 import express from 'express';
-import { isloggedIn } from '../utils/middlewares';
-import {newListing, allListings,userListings, userPurchases} from "../controllers/listings"
+import { isloggedIn } from '../utils/middlewares.js';
+import {newListing, allListings,userListings, userPurchases} from "../controllers/listings.js"
 
 const router = express.Router();
-
-const itemController = require('../controllers/itemController');
 
 router.post('/', isloggedIn, newListing);
 router.get('/', allListings);
