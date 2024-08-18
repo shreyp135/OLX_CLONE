@@ -1,7 +1,7 @@
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 
-export const signup = async (req,res,next)=>{
+export const signup = async (req,res)=>{
     try{
         const { name, email, password } = req.body;
         let userCheck = await User.findOne({ email });
@@ -15,11 +15,11 @@ export const signup = async (req,res,next)=>{
     await newUser.save();
         console.log("User saved to database");
     } catch (err){
-        next(err);
+        console.log(err.message);
     }
 };
 
-export const signout = async (req,res,next) =>{
+export const signout = async (req,res) =>{
     req.logout((err) => {
         if (err) {
           return res.status(500).send('internal server error');
