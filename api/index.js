@@ -46,6 +46,10 @@ const sessionOptions = {
 
 //express app 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(session(sessionOptions));
 app.use(cors(
   {
       origin: ["https://olx-clone-sp.vercel.app"],
@@ -53,10 +57,6 @@ app.use(cors(
       credentials: true,
   }
 ));
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(session(sessionOptions));
-
 
 // Passport Middleware
 app.use(passport.initialize());
