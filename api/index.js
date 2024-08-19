@@ -52,8 +52,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(session(sessionOptions));
 app.use(cors(
   {
-      origin: ["https://olx-clone-sp.vercel.app"],
-      methods: ["POST", "GET"],
+      origin: "https://olx-clone-sp.vercel.app",
+      methods: ['GET','POST','HEAD','PUT','PATCH','DELETE'],
       credentials: true,
   }
 ));
