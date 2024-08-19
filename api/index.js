@@ -46,7 +46,13 @@ const sessionOptions = {
 
 //express app 
 const app = express();
-app.use(cors());
+app.use(cors(
+  {
+      origin: ["https://olx-clone-sp.vercel.app"],
+      methods: ["POST", "GET"],
+      credentials: true,
+  }
+));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(session(sessionOptions));
