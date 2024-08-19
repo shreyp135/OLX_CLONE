@@ -6,7 +6,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchListings = async () => {
-      const res = await axios.get('https://olx-clone-api.vercel.app/api/listings');
+      const res = await axios.get('https://olx-clone-cher.onrender.com/api/listings');
       console.log(res.data)
       setListings(res.data);
     };

@@ -10,7 +10,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     try{
     e.preventDefault();
-    const res = await axios.post('https://olx-clone-api.vercel.app/api/auth/signin', { email, password });
+    const res = await axios.post('https://olx-clone-cher.onrender.com/api/auth/signin', { email, password });
     localStorage.setItem('token', res.data.token);
     navigate('/');
     navigate(0);

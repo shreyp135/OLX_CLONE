@@ -15,8 +15,8 @@ const Dashboard = () => {
       };
       // Fetching purchases and user listings concurrently
       const [res1, res2] = await Promise.all([
-        axios.get('https://olx-clone-api.vercel.app/api/listings/purchases', { headers }),
-        axios.get('https://olx-clone-api.vercel.app/api/listings/userListings', { headers }),
+        axios.get('https://olx-clone-cher.onrender.com/api/listings/purchases', { headers }),
+        axios.get('https://olx-clone-cher.onrender.com/api/listings/userListings', { headers }),
       ]);
       setPurchases(res1.data);
       setUserListings(res2.data)

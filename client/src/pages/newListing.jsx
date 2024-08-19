@@ -13,7 +13,7 @@ export default function newListing() {
         const owner = localStorage.getItem('token');
         if(owner){
         const res = await axios.post(
-          'https://olx-clone-api.vercel.app/api/listings',
+          'https://olx-clone-cher.onrender.com/api/listings',
           { listingName, price, description, owner },
         );
         navigate("/");
