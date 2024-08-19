@@ -2,15 +2,15 @@ import Listings from "../models/listings.js";
 
 
 export const newListing = async (req, res) => {
-  const { name, description, price, sold, owner } = req.body;
+  const { listingName, description, price, owner } = req.body;
 
   try {
     const newListing = new Listings({
-      name,
+      listingName,
       description,
       price,
       sold: false,
-      user: req.user.id,
+      owner,
     });
 
     const listing = await newListing.save();

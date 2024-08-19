@@ -6,7 +6,9 @@ const router = express.Router();
 
 router.post("/signup",signup);
 router.post('/signin', passport.authenticate('local'), (req, res) => {
-    res.json({ message: 'Logged in successfully' });
+    res.json({ message: 'Logged in successfully',
+      token: req.user._id.toString(),
+     });
   });   
 router.get('/signout',signout);
 

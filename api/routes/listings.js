@@ -4,7 +4,7 @@ import {newListing, allListings,userListings, userPurchases} from "../controller
 
 const router = express.Router();
 
-router.post('/', isloggedIn, newListing);
+router.post('/', newListing);
 router.get('/', allListings);
 router.get('/my-items', isloggedIn, userListings);
 router.get('/my-purchases', isloggedIn, userPurchases);

@@ -3,14 +3,11 @@ import mongoose from "mongoose";
 const schema = mongoose.Schema;
 
 const listingSchema = new schema ({
-    name : {
+    listingName : {
         type: String,
         required: true, 
     },
     description : String,
-    // image : {
-    //     type: String,
-    // },
     price : Number,
     sold:{
         type: Boolean,

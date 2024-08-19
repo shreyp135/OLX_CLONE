@@ -6,27 +6,27 @@ import SignIn from './pages/signIn';
 import SignUp from './pages/signUp';
 import Footer from './components/footer';
 import NewListing from './pages/newListing';
-import Purchases from './pages/purchases';
-import UserListings from "./pages/userListings.jsx";
+import Dashboard from './pages/dashboard.jsx';
 
 function App() {
 
   return (
     <>
+          <BrowserRouter>
     <Navbar/>
     <div className='h-[80vh] '>
-        <BrowserRouter>
+  
             <Routes>
               <Route path="/" element={<Home/>}/>
               <Route path="/SignIn" element={<SignIn/>}/>
               <Route path="/SignUp" element={<SignUp/>}/>
               <Route path="/newListing" element={<NewListing/>}/>
-              <Route path="/userListings" element={<UserListings/>}/>
-              <Route path="/purchases" element={<Purchases/>}/>
+              <Route path="/dashboard" element={<Dashboard/>}/>
             </Routes>
-        </BrowserRouter>
+      
       </div>
     <Footer/>
+    </BrowserRouter>
 </>
   )
 }
