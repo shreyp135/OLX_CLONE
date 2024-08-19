@@ -14,6 +14,7 @@ import cors from "cors";
 //.env file config
 dotenv.config();
 
+
 //database connection
 mongoose.connect(process.env.MONGO_URL).then(() =>{
     console.log("Connected to MongoDB server successfully");

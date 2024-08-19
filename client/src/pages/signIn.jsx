@@ -8,12 +8,16 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    console.log( { email, password });
+    try{
     e.preventDefault();
     const res = await axios.post('http://localhost:8080/api/auth/signin', { email, password });
     localStorage.setItem('token', res.data.token);
     navigate('/');
     navigate(0);
+    }
+    catch(err){
+                alert("Please enter correct email or password");
+    }
   };
 
   return (<>

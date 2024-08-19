@@ -33,7 +33,9 @@ export const allListings = async (req, res) => {
 
 export const userListings = async (req, res) => {
   try {
-    const listings = await Listings.find({ owner: req.user.id });
+    const authorizationHeader = req.headers.authorization;
+    const token1 = authorizationHeader.split(' ')[1];
+    const listings = await Listings.find({ owner: token1 });
     res.json(listings);
   } catch (err) {
     console.error(err);
@@ -43,7 +45,9 @@ export const userListings = async (req, res) => {
 
 export const userPurchases = async (req, res) => {
   try {
-    const listings = await Listings.find({ owner: req.user.id,sold: true });
+    const authorizationHeader = req.headers.authorization;
+    const token2 = authorizationHeader.split(' ')[1];
+    const listings = await Listings.find({ owner: token2, sold: true });
     res.json(listings);
   } catch (err) {
     console.error(err);

@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <div >
-      <h1 className='text-xl font-medium m-4'>Fresh Recommendations</h1>
+      <h1 className='text-xl font-medium m-8'>Fresh Recommendations</h1>
       <div className='grid grid-cols-4 px-24 gap-4'> 
         {listings.map((listing) => (
           <div key={listing._id} className='relative h-fit border border-gray-300 rounded-md p-6 hover:shadow-md hover:duration-150'>

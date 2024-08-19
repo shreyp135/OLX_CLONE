@@ -12,9 +12,9 @@ function App() {
 
   return (
     <>
-          <BrowserRouter>
+    <BrowserRouter>
     <Navbar/>
-    <div className='h-[80vh] '>
+    <div className='h-[80vh] overflow-y-scroll hide-scroll-bar'>
   
             <Routes>
               <Route path="/" element={<Home/>}/>

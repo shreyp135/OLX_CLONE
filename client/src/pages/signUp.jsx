@@ -10,7 +10,9 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:8080/api/auth/signup', { userName, email, password });
+    console.log(2)
+    const res = axios.post('http://localhost:8080/api/auth/signup', { userName, email, password });
+    console.log(3);
     navigate('/SignIn');
   };
 
